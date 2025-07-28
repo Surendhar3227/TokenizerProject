@@ -32,7 +32,7 @@ if __name__ == "__main__":
     Unique_noun_df.tail(5)
 
     noun_list = Unique_noun_df['tamil_word'].tolist()
-    suffixes = ['கள்','இன்','ஆக']
+    suffixes = ['கள்','இன்','ஆக','ஆன','உடன்']
     non_lemma_words = []
     lemma_words = []
 
@@ -60,4 +60,11 @@ if __name__ == "__main__":
                 inflected_words.append(inflected_word1)
                 if inflected_word2 != 'null':
                     inflected_words.append(inflected_word2)
+
+            elif suffix == 'ஆன':
+                inflected_word1, inflected_word2 = add_aana(noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+                    
     print(inflected_words[:20])

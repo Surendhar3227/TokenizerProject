@@ -215,3 +215,27 @@ def add_aaga(word, suffix):
     else:
         inflected_word = noun[:-1] + 'ாக'
     return inflected_word, inflected_word2
+
+def add_aana(word, suffix):
+    noun = word
+    inflected_word2 = 'null'
+    if noun.endswith('டு') or noun.endswith('று'):
+        inflected_word = noun[:-1]+'்'+noun[-2]+'ான'
+        inflected_word2 = noun[:-1] + 'ான'
+    elif noun[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
+        inflected_word = noun + 'யான'
+    elif noun[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
+        if (noun[-1] == 'ு') and (len(noun)>=4) and (noun[-2] == noun[-4]):
+            inflected_word = noun[:-1]+'ான'
+        else:
+            inflected_word = noun + 'வான'
+    elif noun[-1] in ['ஏ','ே']:
+        inflected_word = noun + 'யான'
+        inflected_word2 = noun + 'வான'
+    elif noun[-1] == '்' and noun[-3] in short_vowel_signs:
+        inflected_word = noun+noun[-2]+'ான'
+    elif noun[-1] == '்':
+        inflected_word = noun[:-1]+'ான'
+    else:
+        inflected_word = noun[:-1] + 'ான'
+    return inflected_word, inflected_word2
