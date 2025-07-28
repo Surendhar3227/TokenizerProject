@@ -66,5 +66,16 @@ if __name__ == "__main__":
                 inflected_words.append(inflected_word1)
                 if inflected_word2 != 'null':
                     inflected_words.append(inflected_word2)
+
+            elif suffix == 'உடன்':
+                inflected_word1, inflected_word2 = add_udan(noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+                kal_added_noun = add_kal(noun, 'கள்')
+                inflected_word1, inflected_word2 = add_udan(kal_added_noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
                     
     print(inflected_words[:20])
