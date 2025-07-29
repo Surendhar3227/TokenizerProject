@@ -160,6 +160,8 @@ def add_kal(word, suffix):
         inflected_word = word[:-2] + 'ற்கள்'
     elif word.endswith('ள்'):
         inflected_word = word[:-2] + 'ட்கள்'
+    elif word.endswith('ர்'):
+        inflected_word = word + 'கள்'
     elif (len(word) <= 2) and ((word in tamil_all_compounds) or (word in mei_consonants) or (word in uyir_vowels)):
         inflected_word = word + 'க்கள்'
     elif (word[:2] in tamil_nedil_compounds) or (word[:2] in nedil_vowels):
@@ -167,105 +169,210 @@ def add_kal(word, suffix):
     else:
         inflected_word = word + 'கள்'
     return inflected_word
-
+    
 def add_in(word, suffix):
-    noun = word
     inflected_word2 = 'null'
-    if noun.endswith('ம்'):
-        inflected_word = noun[:-2]+'த்தின்'
-    elif noun.endswith('ள்'):
-        inflected_word = noun[:-1]+'ின்'
-    elif noun.endswith('டு') or noun.endswith('று'):
-        inflected_word = noun[:-1]+'்'+noun[-2]+'ின்'
-    elif noun[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
-        inflected_word = noun + 'யின்'
-    elif noun[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
-        if (noun[-1] == 'ு') and (len(noun)>=4) and (noun[-2] == noun[-4]):
-            inflected_word = noun[:-1]+'ின்'
+    if word.endswith('ம்'):
+        inflected_word = word[:-2]+'த்தின்'
+    elif word.endswith('ள்'):
+        inflected_word = word[:-1]+'ின்'
+    elif word.endswith('டு') or word.endswith('று'):
+        inflected_word = word[:-1]+'்'+word[-2]+'ின்'
+    elif word[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
+        inflected_word = word + 'யின்'
+    elif word[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
+        if (word[-1] == 'ு') and (len(word)>=4) and (word[-2] == word[-4]):
+            inflected_word = word[:-1]+'ின்'
         else:
-            inflected_word = noun + 'வின்'
-    elif noun[-1] in ['ஏ','ே']:
-        inflected_word = noun + 'யின்'
-        inflected_word2 = noun + 'வின்'
-    elif noun[-1] == '்' and (noun[-3] in short_vowel_signs or noun[-3] in mei_consonants):
-        inflected_word = noun+noun[-2]+'ின்'
+            inflected_word = word + 'வின்'
+    elif word[-1] in ['ஏ','ே']:
+        inflected_word = word + 'யின்'
+        inflected_word2 = word + 'வின்'
+    elif len(word) ==4 and word[-1] == '்' and word[1] in short_vowel_signs and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ின்'
+    elif len(word)<=3 and word[-1] == '்' and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ின்'
     else:
-        inflected_word = noun[:-1] + 'ின்'
-
+        inflected_word = word[:-1] + 'ின்'
     return inflected_word, inflected_word2
 
 def add_aaga(word, suffix):
-    noun = word
     inflected_word2 = 'null'
-    if noun.endswith('டு') or noun.endswith('று'):
-        inflected_word = noun[:-1]+'்'+noun[-2]+'ாக'
-        inflected_word2 = noun[:-1] + 'ாக'
-    elif noun[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
-        inflected_word = noun + 'யாக'
-    elif noun[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
-        if (noun[-1] == 'ு') and (len(noun)>=4) and (noun[-2] == noun[-4]):
-            inflected_word = noun[:-1]+'ாக'
+    if word.endswith('டு') or word.endswith('று'):
+        inflected_word = word[:-1]+'்'+word[-2]+'ாக'
+        inflected_word2 = word[:-1] + 'ாக'
+    elif word[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
+        inflected_word = word + 'யாக'
+    elif word[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
+        if (word[-1] == 'ு') and (len(word)>=4) and (word[-2] == word[-4]):
+            inflected_word = word[:-1]+'ாக'
         else:
-            inflected_word = noun + 'வாக'
-    elif noun[-1] in ['ஏ','ே']:
-        inflected_word = noun + 'யாக'
-        inflected_word2 = noun + 'வாக'
-    elif noun[-1] == '்' and (noun[-3] in short_vowel_signs or noun[-3] in mei_consonants):
-        inflected_word = noun+noun[-2]+'ாக'
-    elif noun[-1] == '்':
-        inflected_word = noun[:-1]+'ாக'
+            inflected_word = word + 'வாக'
+    elif word[-1] in ['ஏ','ே']:
+        inflected_word = word + 'யாக'
+        inflected_word2 = word + 'வாக'
+    elif len(word) ==4 and word[-1] == '்' and word[1] in short_vowel_signs and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ாக'
+    elif len(word)<=3 and word[-1] == '்' and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ாக'
+    elif word[-1] == '்':
+        inflected_word = word[:-1]+'ாக'
     else:
-        inflected_word = noun[:-1] + 'ாக'
+        inflected_word = word[:-1] + 'ாக'
     return inflected_word, inflected_word2
 
 def add_aana(word, suffix):
-    noun = word
     inflected_word2 = 'null'
-    if noun.endswith('டு') or noun.endswith('று'):
-        inflected_word = noun[:-1]+'்'+noun[-2]+'ான'
-        inflected_word2 = noun[:-1] + 'ான'
-    elif noun[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
-        inflected_word = noun + 'யான'
-    elif noun[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
-        if (noun[-1] == 'ு') and (len(noun)>=4) and (noun[-2] == noun[-4]):
-            inflected_word = noun[:-1]+'ான'
+    if word.endswith('டு') or word.endswith('று'):
+        inflected_word = word[:-1]+'்'+word[-2]+'ான'
+        inflected_word2 = word[:-1] + 'ான'
+    elif word[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
+        inflected_word = word + 'யான'
+    elif word[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
+        if (word[-1] == 'ு') and (len(word)>=4) and (word[-2] == word[-4]):
+            inflected_word = word[:-1]+'ான'
         else:
-            inflected_word = noun + 'வான'
-    elif noun[-1] in ['ஏ','ே']:
-        inflected_word = noun + 'யான'
-        inflected_word2 = noun + 'வான'
-    elif noun[-1] == '்' and (noun[-3] in short_vowel_signs or noun[-3] in mei_consonants):
-        inflected_word = noun+noun[-2]+'ான'
-    elif noun[-1] == '்':
-        inflected_word = noun[:-1]+'ான'
+            inflected_word = word + 'வான'
+    elif word[-1] in ['ஏ','ே']:
+        inflected_word = word + 'யான'
+        inflected_word2 = word + 'வான'
+    elif len(word) ==4 and word[-1] == '்' and word[1] in short_vowel_signs and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ான'
+    elif len(word)<=3 and word[-1] == '்' and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ான'
+    elif word[-1] == '்':
+        inflected_word = word[:-1]+'ான'
     else:
-        inflected_word = noun[:-1] + 'ான'
+        inflected_word = word[:-1] + 'ான'
     return inflected_word, inflected_word2
 
 def add_udan(word, suffix):
-    noun = word
     inflected_word2 = 'null'
-    if noun.endswith('ம்'):
-        inflected_word = noun[:-2]+'த்துடன்'
-    elif noun.endswith('ள்'):
-        inflected_word = noun[:-1]+'ுடன்'
-    elif noun.endswith('டு') or noun.endswith('று'):
-        inflected_word = noun[:-1]+'்'+noun[-2]+'ுடன்'
-        inflected_word2 = noun[:-1] + 'ுடன்'
-    elif noun[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
-        inflected_word = noun + 'யுடன்'
-    elif noun[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
-        if (noun[-1] == 'ு') and (len(noun)>=4) and (noun[-2] == noun[-4]):
-            inflected_word = noun[:-1]+'ுடன்'
+    if word.endswith('ம்'):
+        inflected_word = word[:-2]+'த்துடன்'
+    elif word.endswith('ள்'):
+        inflected_word = word[:-1]+'ுடன்'
+    elif word.endswith('டு') or word.endswith('று'):
+        inflected_word = word[:-1]+'்'+word[-2]+'ுடன்'
+        inflected_word2 = word[:-1] + 'ுடன்'
+    elif word[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
+        inflected_word = word + 'யுடன்'
+    elif word[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
+        if (word[-1] == 'ு') and (len(word)>=4) and (word[-2] == word[-4]):
+            inflected_word = word[:-1]+'ுடன்'
         else:
-            inflected_word = noun + 'வுடன்'
-    elif noun[-1] in ['ஏ','ே']:
-        inflected_word = noun + 'யுடன்'
-        inflected_word2 = noun + 'வுடன்'
-    elif noun[-1] == '்' and (noun[-3] in short_vowel_signs or noun[-3] in mei_consonants):
-        inflected_word = noun+noun[-2]+'ுடன்'
-    elif noun[-1] == '்':
-        inflected_word = noun[:-1]+'ுடன்'
+            inflected_word = word + 'வுடன்'
+    elif word[-1] in ['ஏ','ே']:
+        inflected_word = word + 'யுடன்'
+        inflected_word2 = word + 'வுடன்'
+    elif len(word) ==4 and word[-1] == '்' and word[1] in short_vowel_signs and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ுடன்'
+    elif len(word)<=3 and word[-1] == '்' and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ுடன்'
+    elif word[-1] == '்':
+        inflected_word = word[:-1]+'ுடன்'
     else:
-        inflected_word = noun[:-1] +'ுடன்'
+        inflected_word = word[:-1] +'ுடன்'
+    return inflected_word, inflected_word2
+
+def add_illaamal(word, suffix):
+    inflected_word2 = 'null'
+    if word.endswith('ள்'):
+        inflected_word = word[:-1]+'ில்லாமல்'
+    elif word[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
+        inflected_word = word + 'யில்லாமல்'
+    elif word[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
+        if (word[-1] == 'ு') and (len(word)>=4) and (word[-2] == word[-4]):
+            inflected_word = word[:-1]+'ில்லாமல்'
+        else:
+            inflected_word = word + 'வில்லாமல்'
+    elif word[-1] in ['ஏ','ே']:
+        inflected_word = word + 'யில்லாமல்'
+        inflected_word2 = word + 'வில்லாமல்'
+    elif len(word) ==4 and word[-1] == '்' and word[1] in short_vowel_signs and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ில்லாமல்'
+    elif len(word)<=3 and word[-1] == '்' and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ில்லாமல்'
+    elif word[-1] == '்':
+        inflected_word = word[:-1]+'ில்லாமல்'
+    else:
+        inflected_word = word[:-1] +'ில்லாமல்'
+    return inflected_word, inflected_word2
+
+def add_idam(word, suffix):
+    inflected_word2 = 'null'
+    if word.endswith('ம்'):
+        inflected_word = word[:-2]+'த்திடம்'
+    elif word.endswith('ள்'):
+        inflected_word = word[:-1]+'ிடம்'
+    elif word[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
+        inflected_word = word + 'யிடம்'
+    elif word[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
+        if (word[-1] == 'ு') and (len(word)>=4) and (word[-2] == word[-4]):
+            inflected_word = word[:-1]+'ிடம்'
+        else:
+            inflected_word = word + 'விடம்'
+    elif word[-1] in ['ஏ','ே']:
+        inflected_word = word + 'யிடம்'
+        inflected_word2 = word + 'விடம்'
+    elif len(word) ==4 and word[-1] == '்' and word[1] in short_vowel_signs and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ிடம்'
+    elif len(word)<=3 and word[-1] == '்' and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ிடம்'
+    elif word[-1] == '்':
+        inflected_word = word[:-1]+'ிடம்'
+    else:
+        inflected_word = word[:-1] +'ிடம்'
+    return inflected_word, inflected_word2
+
+def add_il(word, suffix):
+    inflected_word2 = 'null'
+    if word.endswith('ம்'):
+        inflected_word = word[:-2]+'த்தில்'
+    elif word.endswith('ள்'):
+        inflected_word = word[:-1]+'ில்'
+    elif word[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
+        inflected_word = word + 'யில்'
+    elif word[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
+        if (word[-1] == 'ு') and (len(word)>=4) and (word[-2] == word[-4]):
+            inflected_word = word[:-1]+'ில்'
+        else:
+            inflected_word = word + 'வில்'
+    elif word[-1] in ['ஏ','ே']:
+        inflected_word = word + 'யில்'
+        inflected_word2 = word + 'வில்'
+    elif len(word) ==4 and word[-1] == '்' and word[1] in short_vowel_signs and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ில்'
+    elif len(word)<=3 and word[-1] == '்' and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ில்'
+    elif word[-1] == '்':
+        inflected_word = word[:-1]+'ில்'
+    else:
+        inflected_word = word[:-1] +'ில்'
+    return inflected_word, inflected_word2
+
+def add_ilirundhu(word, suffix):
+    inflected_word2 = 'null'
+    if word.endswith('ம்'):
+        inflected_word = word[:-2]+'த்திலிருந்து'
+    elif word.endswith('ள்'):
+        inflected_word = word[:-1]+word[-2]+'ிலிருந்து'
+    elif word[-1] in ['ி', 'ீ', 'ை', 'இ', 'ஈ', 'ஐ']:
+        inflected_word = word + 'யிலிருந்து'
+    elif word[-1] in ['', 'ா', 'ு', 'ூ', 'ெ', 'ொ', 'ோ', 'ௌ', 'அ', 'ஆ', 'உ', 'ஊ', 'எ', 'ஒ', 'ஓ', 'ஔ']:
+        if (word[-1] == 'ு') and (len(word)>=4) and (word[-2] == word[-4]):
+            inflected_word = word[:-1]+'ிலிருந்து'
+        else:
+            inflected_word = word + 'விலிருந்து'
+    elif word[-1] in ['ஏ','ே']:
+        inflected_word = word + 'யிலிருந்து'
+        inflected_word2 = word + 'விலிருந்து'
+    elif len(word) ==4 and word[-1] == '்' and word[1] in short_vowel_signs and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ிலிருந்து'
+    elif len(word)<=3 and word[-1] == '்' and word[0] in mei_consonants:
+        inflected_word = word+word[-2]+'ிலிருந்து'
+    elif word[-1] == '்':
+        inflected_word = word[:-1]+'ிலிருந்து'
+    else:
+        inflected_word = word[:-1] +'ிலிருந்து'
     return inflected_word, inflected_word2

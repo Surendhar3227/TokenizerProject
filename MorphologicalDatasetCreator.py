@@ -32,7 +32,7 @@ if __name__ == "__main__":
     Unique_noun_df.tail(5)
 
     noun_list = Unique_noun_df['tamil_word'].tolist()
-    suffixes = ['கள்','இன்','ஆக','ஆன','உடன்']
+    suffixes = ['கள்','இன்','ஆக','ஆன','உடன்','இல்லாமல்','இடம்','இலிருந்து','இல்']
     non_lemma_words = []
     lemma_words = []
 
@@ -77,5 +77,50 @@ if __name__ == "__main__":
                 inflected_words.append(inflected_word1)
                 if inflected_word2 != 'null':
                     inflected_words.append(inflected_word2)
-                    
+
+            elif suffix == 'இல்லாமல்':
+                inflected_word1, inflected_word2 = add_illaamal(noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+                kal_added_noun = add_kal(noun, 'கள்')
+                inflected_word1, inflected_word2 = add_illaamal(kal_added_noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+
+            elif suffix == 'இடம்':
+                inflected_word1, inflected_word2 = add_idam(noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+                kal_added_noun = add_kal(noun, 'கள்')
+                inflected_word1, inflected_word2 = add_idam(kal_added_noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+
+            elif suffix == 'இல்':
+                inflected_word1, inflected_word2 = add_il(noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+                kal_added_noun = add_kal(noun, 'கள்')
+                inflected_word1, inflected_word2 = add_idam(kal_added_noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+
+            elif suffix == 'இலிருந்து':
+                inflected_word1, inflected_word2 = add_ilirundhu(noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+                kal_added_noun = add_kal(noun, 'கள்')
+                inflected_word1, inflected_word2 = add_ilirundhu(kal_added_noun, suffix)
+                inflected_words.append(inflected_word1)
+                if inflected_word2 != 'null':
+                    inflected_words.append(inflected_word2)
+
+                        
     print(inflected_words[:20])
