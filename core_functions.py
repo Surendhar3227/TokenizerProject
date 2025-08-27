@@ -5,7 +5,7 @@ import sentencepiece as spm
 from transformers import AutoTokenizer
 import pandas as pd
 import re
-# access_token = "ACCESS_TOKEN"
+access_token = "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"
 
 gemma_tokenizer = AutoTokenizer.from_pretrained("google/gemma-3-1b-it", trust_remote_code=True, token=access_token)
 bert_tokenizer = AutoTokenizer.from_pretrained("bert-base-multilingual-cased")
